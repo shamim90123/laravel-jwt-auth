@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::middleware(['auth.user'])->group(function () {
+    // Your protected routes go here
+    Route::get('token-verification', function () {
+        Log::info('Token Verification route executed');
+        return response([
+            'success' => true
+        ]);
+    });
+
 });
