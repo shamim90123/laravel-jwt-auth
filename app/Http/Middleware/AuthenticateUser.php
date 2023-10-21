@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Crypt;
+
 class AuthenticateUser
 {
     /**
@@ -18,6 +20,11 @@ class AuthenticateUser
      */
     public function handle(Request $request, Closure $next)
     {
+
+        $userDetail = unserialize(Crypt::decryptString(app('request')->header('user_detail')));
+        // return $userDetail['user_id'];
+
+        Log::info($userDetail['user_id']);
 
         if (Auth::check()) {
             return $next($request);
